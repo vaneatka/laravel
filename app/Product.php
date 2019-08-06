@@ -3,6 +3,7 @@
     
     use Illuminate\Support\Collection;
     use App\Price;
+    
 
     class Product {
       public  $name;
@@ -10,9 +11,9 @@
       public  $price;
         public function __construct(string $name, string $image, Price $price)
         {
-            $this->name =setName($name) ;
-            $this->image =collect(setImage($image)) ;
-            $this->price =setPrice($price) ;
+            $this->name =$name ;
+            $this->image =collect([$image]) ;
+            $this->price =$price;
         }
       
       public function getName()
