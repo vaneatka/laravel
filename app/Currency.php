@@ -1,40 +1,13 @@
-<?php 
-    namespace App;
-    class Currency {
-        public $name;
-        public $code;
+<?php
 
-        public function __construct(string $name, string $code)
-        {
-            $this->name = $name;
-            $this->code = $code;
-        }
-        
+namespace App;
 
-        public function getCode()
-        {
-                return $this->code;
-        }
+use Illuminate\Database\Eloquent\Model;
 
+class Currency extends Model
+{
+    //
 
-        public function setCode($code)
-        {
-                $this->code = $code;
-
-                return $this;
-        }
-
-
-        public function getName()
-        {
-                return $this->name;
-        }
-
-
-        public function setName($name)
-        {
-                $this->name = $name;
-
-                return $this;
-        }
-    }
+    // configuram modelul
+    protected $fillable = ['name', 'code'];
+}

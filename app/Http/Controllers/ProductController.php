@@ -13,7 +13,7 @@ class ProductController extends Controller
         return view('product');
     }
 
-    public function test(){
+    public function old_test(){
         $faker = Faker::create();
         $products = collect([]);
         for ($i=0; $i < 5  ; $i++) { 
@@ -25,5 +25,21 @@ class ProductController extends Controller
             }
         }
         return view('products.test', ['products'=>$products]);
+    }
+
+    public function test(){
+        $faker = Faker::create();
+        // $c1 = new Currency();// in memorie
+        // $c1->code = $faker->currencyCode;
+        // $c1->name = 'HZ';
+        // $c1->save();
+
+        // Currency::create([
+        //     "name" => "US DOllar",
+        //     'code' => "USD"
+        // ]);
+        $currencies = Currency::all()->sortByDesc('code')->pluck('code');
+        dump($currencies);
+        return 'ok';
     }
 }
