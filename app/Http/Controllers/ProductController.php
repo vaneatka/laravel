@@ -19,6 +19,11 @@ class ProductController extends Controller
         for ($i=0; $i < 5  ; $i++) { 
             $products->push(new Product($faker->company ,$faker->imageUrl(240),new Price(rand(100,5000), new Currency('Lei Moldovenesti', $faker->currencyCode))) );
         }
+        foreach($products as $product){
+            for ($i=1; $i < 10; $i++) { 
+                $product->addImage($faker->imageUrl());
+            }
+        }
         return view('products.test', ['products'=>$products]);
     }
 }
