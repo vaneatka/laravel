@@ -43,5 +43,8 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
+    'fixer'=>[
+        'key'=>env("5a70b61ac22c217cfda4cd4ab690bb9b"),
+    ]
 
 ];
