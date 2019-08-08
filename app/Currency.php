@@ -9,5 +9,5 @@ class Currency extends Model
     //
 
     // configuram modelul
-    protected $fillable = ['name', 'code'];
+    protected $fillable = ['name', 'code', 'rate'];
 }

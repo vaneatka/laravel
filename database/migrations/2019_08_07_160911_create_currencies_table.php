@@ -17,6 +17,7 @@ class CreateCurrenciesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 30);
             $table->string('code',4);
+            $table->float('rate');
             $table->timestamps();
             // aplicam reguli asupra tabelului
             $table->unique('code');
