@@ -1,43 +1,18 @@
-<?php 
-    namespace App;
+<?php
 
-    use App\Currency;
+namespace App;
 
-    class Price {
-        public $value;
-        public $currency;
-        
-        public function __construct(float $value, Currency $currency)
-        {
-            $this->value = $value;
-            $this->currency = $currency;
-        }
+use Illuminate\Database\Eloquent\Model;
 
-        
-        public function getValue() : float
-        {
-                return $this->value;
-        }
-
-       
-        public function setValue(float $value)
-        {
-                $this->value = $value;
-
-                return $this;
-        }
-
-        
-        public function getCurrency()
-        {
-                return $this->currency;
-        }
-
-      
-        public function setCurrency(Currency $currency)
-        {
-                $this->currency = $currency;
-
-                return $this;
-        }
+class Price extends Model
+{
+    //
+    public function currency(){
+        return $this->hasOne(\App\Currency::class);
     }
+
+    public function product(){
+        return $this->belongsTo(\App\Product::class);
+    }
+
+}
