@@ -16,3 +16,11 @@ $c1-rates() - incarca obiectul relatiei
 ajustati migratiile pentru price product
 
 Produs -> Preturi -> currencies -> rate
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+1 hw 12 august
+
+asemenator la telefon de adaugat
+    email
+    social+tipul retelei
