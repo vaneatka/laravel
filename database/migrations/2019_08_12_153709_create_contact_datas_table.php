@@ -19,6 +19,7 @@ class CreateContactDatasTable extends Migration
             $table->bigInteger('client_id')->nullable();     // legatura cu clientul       
             $table->bigInteger('country_id')->nullable();     // legatura cu clientul       
             $table->bigInteger('city_id')->nullable();     // legatura cu clientul       
+            $table->bigInteger('email_id')->nullable();     // legatura cu clientul       
         });
     }
 

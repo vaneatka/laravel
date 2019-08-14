@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Phone, ContactData, Country, City, Client};
+use App\{Phone, ContactData, Country, City, Client, Social, Email};
 
 class TestController extends Controller
 {
@@ -43,17 +43,32 @@ class TestController extends Controller
         $phone2 = Phone::create([
             'number' => '35236236'
         ]);
+        
+        $email = Email::create([
+            'email' => 'posta@electronica'
+        ]);
+        
+        $social = Social::create([
+            'name' => 'social@nume',
+            'social_id' => 'idididi'
+        ]);
+
+
             ///////////// cream relatiile
 
         $contact->phones()->save($phone1);
         $contact->phones()->save($phone2);
         $contact->country()->associate($country);
         $city->country()->associate($country);
-        $city->save();
+        
         $contact->city()->associate($city);
         $contact->client()->associate($client);
-        $contact->save();
+        
+        
+        $contact->email()->associate($email);
 
+        $contact->social()->save($email);
+        $contact->save();
 
 
 }

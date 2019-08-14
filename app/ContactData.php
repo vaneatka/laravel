@@ -24,5 +24,13 @@ class ContactData extends Model
         return $this->belongsTo(\App\Client::class);
     }
 
+    public function email(){
+        return $this->belongsTo(\App\Email::class);
+    }
+
+    public function social(){
+        return $this->hasMany(\App\Social::class);
+    }
+
 
 }
