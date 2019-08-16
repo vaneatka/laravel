@@ -20,3 +20,8 @@ Route::get('/products', 'ProductController@index');
 Route::get('/test/run', 'TestController@run');
 
 Route::get('/currencies/import', 'CurrencyController@import');
+
+Route::get('/subscribe', 'ClientController@subscribeForm')->name('client.subscribe');
+Route::post('/subscribe', 'ClientController@subscribe');
+
+

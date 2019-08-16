@@ -24,3 +24,16 @@ Produs -> Preturi -> currencies -> rate
 asemenator la telefon de adaugat
     email
     social+tipul retelei
+
+CSRF - cross site request forgery protectie de boti @csrf
+
+hw 16 august//
+
+
+/admin/subscribers
+
+    -> admin\clientCOntroller@subscribers
+        ->views/admin/subscribers.blade.php
+            +paginator(laravel)
+            -TABLE(bootstrapp)
+                ->email | created
