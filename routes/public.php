@@ -25,3 +25,4 @@ Route::get('/subscribe', 'ClientController@subscribeForm')->name('client.subscri
 Route::post('/subscribe', 'ClientController@subscribe');
 
 
+
