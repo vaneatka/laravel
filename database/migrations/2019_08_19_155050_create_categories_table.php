@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmailsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateEmailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('emails', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('category_id')->nullable();// legatura cu categoria parinte
+            $table->string('name',20);            
             $table->timestamps();
-            $table->boolean('subscribed')->default(false);
-            $table->boolean('status')->default(false);
-            $table->string('email', 20);
-            $table->bigInteger('contact_data_id')->nullable();
         });
     }
 
@@ -30,6 +28,6 @@ class CreateEmailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('emails');
+        Schema::dropIfExists('categories');
     }
 }

@@ -11,9 +11,9 @@
   </thead>
   
   <tbody>
-    @foreach ($subscribers as $num=>$item)
+    @foreach ($subscribers as $item)
     <tr>      
-      <td> {{$num+1}}</td>
+      <td> {{$item->id}}</td>
       <td> {{$item->email}}</td>
       <td> {{$item->created_at}}</td>     
     </tr>

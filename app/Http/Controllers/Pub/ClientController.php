@@ -13,7 +13,9 @@ class ClientController extends Controller
     
     public function subscribe(Request $request){
         Email::create([
-            'email'=> $request->email
+            'email'=> $request->email,
+            'subscribed'=> true
         ]);
+        return redirect()->route('client.subscribe');
     }
 }

@@ -37,3 +37,9 @@ hw 16 august//
             +paginator(laravel)
             -TABLE(bootstrapp)
                 ->email | created
+
+
+hw 19 august//
+
+BS 4 Accordion example 
+categoria-> collapse subcategorie
