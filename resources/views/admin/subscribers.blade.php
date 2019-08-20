@@ -1,7 +1,15 @@
 @extends('admin.layout')
 
 @section('content')
-<table class="table">
+<form action="{{route('admin.subscribeMany')}}" method="POST">
+    <h3>Lista Email</h3>
+    <button type="submit" class="btn btn-primary">Incarca Tabelul</button>
+    <a  href="delete/subscribers" class="btn btn-warning">Empty Table</a>
+    <a href="subscribers">Show All</a>
+    @csrf
+</form>
+
+<table class="table mt-3">
   <thead>
     <tr> 
       <th>Nr.</th>
@@ -22,5 +30,6 @@
 </table>
 
 {{$subscribers->links()}}
+
 
 @endsection

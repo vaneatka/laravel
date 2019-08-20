@@ -13,10 +13,13 @@ Route::get('/test', function () {
 });
 
 Route::get('/subscribers', "AdminController@subscribers")->name('admin.subscribers');
-Route::get('/subscribeMany', 'AdminController@subscribeManyForm')->name('admin.subscribemanyform');
+Route::get('/subscribeMany', 'AdminController@subscribeMany')->name('admin.subscribeMany');
 Route::post('/subscribeMany', 'AdminController@subscribeMany');
 
+Route::get('delete/subscribers', 'AdminController@delete_table');
+
 // gestionarea categorielor
-Route::resource('/categories', 'CategoryController');
+Route::resource('categories','CategoryController');
+
 
 

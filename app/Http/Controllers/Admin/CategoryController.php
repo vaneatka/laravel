@@ -28,7 +28,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+                
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -39,7 +40,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //       
+        Category::create([
+            'name' => $request->name
+        ]);
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -61,7 +66,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::where('id', '!=', $id)->get();
+        $edited = Category::find($id);
+        // dd($categories, $edited);
+        return view('admin.category_edit', compact('edited', 'categories'));
     }
 
     /**
@@ -73,7 +81,20 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request, $id);
+        $cat = Category::find($id);
+        $parent = Category::where('name', $request->parent)->first();
+        $children = Category::where('name', $request->children)->first();
+        if($request->parent !== "-------"){
+            $cat->parent()->associate($parent)->save();
+        }
+        if($request->children !== "-------"){
+            $cat->children()->save($children);
+        }
+        if(isset($request->name)){
+            $cat->save(['name'=> $request->name]);
+        }
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -85,5 +106,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
+        Category::find($id)->delete();
+        return redirect()->route('categories.index'); 
     }
 }

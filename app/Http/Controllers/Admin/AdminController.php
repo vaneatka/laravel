@@ -12,11 +12,7 @@ class AdminController extends Controller
         $subscribers = Email::where('subscribed','1')->paginate(15);
         return view('admin.subscribers',compact('subscribers'));
     }
-
-    public function subscribeManyForm(Request $request){
-               return view('admin.subscribemanyform');
-    }
-
+   
     public function subscribeMany(Request $request)
     {
         $faker = \Faker\Factory::create();
@@ -28,6 +24,11 @@ class AdminController extends Controller
                 'subscribed'=> (bool)random_int(0, 1)];
         }       
         Email::insert($multiple_data);
+        return redirect()->route('admin.subscribers');
+    }
+
+    public function delete_table(){
+        Email::truncate();
         return redirect()->route('admin.subscribers');
     }
 }
