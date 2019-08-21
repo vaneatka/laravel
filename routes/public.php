@@ -24,5 +24,7 @@ Route::get('/currencies/import', 'CurrencyController@import');
 Route::get('/subscribe', 'ClientController@subscribeForm')->name('client.subscribe');
 Route::post('/subscribe', 'ClientController@subscribe');
 
+Route::resource('categories', 'CategoryController');
+
 
 

@@ -1,5 +1,12 @@
 @extends('admin.layout')
 
+@php
+    
+    // dd($categories);
+@endphp
+
+
+
 @section('content')
 <form action="categories" method="POST">
     <input type="text" name="name" placeholder="Category name" class="form-control">
@@ -23,18 +30,17 @@
 <tbody>
 @foreach ($categories as $item)
     <tr>
-        <th scope="row">{{$item->id}}</th>
+        <td scope="row">{{$item->id}}</td>
         <td>{{$item->name}}</td>
-        <td>{{$item->parent}}</td>
-        <td>{{$item->children}}</td>
+        <td>{{$item->parent->name ?? null}}</td>
+        <td>{{$item->children->first()['name'] ?? null}}</td>
         <td><a href="categories/{{$item->id}}/edit" class="btn btn-secondary">Edit</a></td>
         <td>
             <form action="categories/{{$item->id}}" method="POST">
                 @method('DELETE')
                 <button class="btn btn-default" type="submit" />Delete</button> 
                 @csrf 
-            </form>
-        
+            </form>        
         </td>
     </tr>   
     @endforeach
