@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
-{
-    public function prices(){
+class Cart extends Model
+{    
+    use SoftDeletes;
+
+    public function total_price(){
         return $this->morphMany(\App\Price::class, 'priceable');
     }
-
-    protected $fillable = ['name'];
 }

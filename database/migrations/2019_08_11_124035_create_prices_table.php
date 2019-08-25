@@ -17,9 +17,11 @@ class CreatePricesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->decimal('value', 11 ,2);
-            $table->boolean('discount');
-            $table->bigInteger('product_id')->nullable();
+            $table->boolean('discount')->nullable();
             $table->bigInteger('currency_id')->nullable();
+
+            $table->bigInteger('priceable_id')->nullable();
+            $table->string('priceable_type',150)->nullable();
         });
     }
 

@@ -8,11 +8,12 @@ class Price extends Model
 {
     //
     public function currency(){
-        return $this->hasOne(\App\Currency::class);
+        return $this->belongsTo(\App\Currency::class);
     }
 
-    public function product(){
-        return $this->belongsTo(\App\Product::class);
+    public function priceable(){
+        return $this->morphTo();
     }
+    protected $fillable=['value'];
 
 }

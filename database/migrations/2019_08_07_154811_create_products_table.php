@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             // aici descriem schema/ structura tabelului bazei de date
             $table->bigIncrements('id');
             $table->string('name',200); // max 200 caractere
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

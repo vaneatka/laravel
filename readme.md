@@ -43,3 +43,11 @@ hw 19 august//
 
 BS 4 Accordion example 
 categoria-> collapse subcategorie
+
+// Cart logic
+  - ServiceProvider
+  - Session
+  - Model 'cart' +relations
+
+  Price-> product_id -> Product
+  ??? ne trebuie Price-> ???-> Cart

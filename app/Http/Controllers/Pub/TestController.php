@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers\Pub;
 
+use Artisan;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\{Phone, ContactData, Country, City, Client, Social, Email, Category};
+use App\{Phone, ContactData, Country, City, Client, Social, Email, Category, Price, Currency, Product,Cart};
 
 class TestController extends Controller
 {
     //
     public function run(){
+
+        Artisan::call('migrate:refresh');
     //     $c1=Currency::create([
     //         'code'=> 'EUR',
     //         'name'=> 'Euro'
@@ -86,9 +89,37 @@ class TestController extends Controller
 
         // $cat1->children()->save($cat2);
         // $cat3->parent()->associate($cat2)->save();
-           $result = Category::where('name','Porumb')->get();
-           dd($result->first()->children);
-}
+        //    $result = Category::where('name','Porumb')->get();
+        //    dd($result->first()->children);
 
+        $currency = Currency::create([
+            'code' => 'EUR',
+            'name' => 'Euro'
+        ]);
+
+        $price = Price::create([
+            'value' => 10.5
+        ]);
+        $price2 = Price::create([
+            'value' => 1481.5
+        ]);
+    
+        
+        $price->currency()->associate($currency)->save();
+        $price2->currency()->associate($currency)->save();
+        
+        $product= Product::create([
+            'name' => 'ARGH'
+        ]);
+
+        $product->prices()->save($price);
+        
+        $cart = Cart::create()->total_price()->save($price2);
+        $cart2 = Cart::create();
+        $cart2->total_price()->save($price);
+
+        
+        $cart2->delete();
+    }
 
 }
