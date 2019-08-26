@@ -10,5 +10,5 @@ class Product extends Model
         return $this->morphMany(\App\Price::class, 'priceable');
     }
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description', 'image'];
 }

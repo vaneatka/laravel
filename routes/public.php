@@ -16,6 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/products', 'ProductController@index');
+Route::get('/catalog/price/{sort}', 'ProductController@indexPriceSort');
+Route::get('/catalog/date/{sort}', 'ProductController@indexDateSort');
 
 Route::get('/catalog', 'CatalogController@index');
 

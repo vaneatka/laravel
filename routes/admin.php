@@ -21,5 +21,7 @@ Route::get('delete/subscribers', 'AdminController@delete_table');
 // gestionarea categorielor
 Route::resource('categories','CategoryController');
 
+Route::get('/products','ImportController@add');
+
 
 

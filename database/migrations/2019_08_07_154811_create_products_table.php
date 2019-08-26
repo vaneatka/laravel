@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name',200); // max 200 caractere
             $table->string('description')->nullable();
+            $table->string('image');
             $table->timestamps();
         });
     }
