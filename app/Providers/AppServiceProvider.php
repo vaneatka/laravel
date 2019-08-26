@@ -24,8 +24,7 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-        //
+    {        
         $cart = Cart::with('total_price')->first();
         View::share('cart', $cart);
     }

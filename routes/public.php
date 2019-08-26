@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::get('/products', 'ProductController@index');
 
+Route::get('/catalog', 'CatalogController@index');
+
 Route::get('/test/run', 'TestController@run');
 
 Route::get('/currencies/import', 'CurrencyController@import');
