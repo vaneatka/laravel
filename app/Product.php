@@ -10,5 +10,10 @@ class Product extends Model
         return $this->morphMany(\App\Price::class, 'priceable');
     }
 
+    public function cartItems()
+    {
+        return $this->belongsTo(\App\CartItem::class);
+    }
+    
     protected $fillable = ['name', 'description', 'image'];
 }

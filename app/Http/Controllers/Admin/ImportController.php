@@ -33,18 +33,8 @@ class ImportController extends Controller
             $product->prices()->save($price);
         }
         
-        $cart = Cart::create();
-        $total_price=0;
-        $products= Product::all();
-        foreach ($products->pluck('prices') as $product) {
-            $total_price+= $product->first()['value'];
-        }
-        $price = Price::create([
-            'value'=> $total_price
-        ]);
-        $price->currency()->associate($currency)->save();
-        $cart->total_price()->save($price);
-       
+        Cart::create();
+        
         
         return 'done';
     }

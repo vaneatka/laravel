@@ -1,9 +1,15 @@
 
 
-{{-- @dump($category) --}}
+@isset(($category->children))  
 
-@if (isset($category))
-    
+<ul>
+    @foreach ($category->children as $child)
+        @include('public.partials.category_partial', $child)
+    @endforeach
+</ul>
+
+@endisset
+
+{{-- @dump($category->children) --}}
 
 
-{{-- @endif --}}

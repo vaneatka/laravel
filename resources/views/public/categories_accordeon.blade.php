@@ -10,7 +10,7 @@
 
 <div id="accordion">
 
-  @foreach ($cat as $item)        
+  {{-- @foreach ($cat as $item)        
   <div class="card">
         <div class="card-header" id="heading{{$item->id}}">
           <h5 class="mb-0">
@@ -28,6 +28,8 @@
     @endforeach
   </div>  
         
-  @endforeach
+  @endforeach --}}
+  {{-- @dump($cat) --}}
+  @each('public.partials.category_partial', $cat, 'category')
 </div>
 @endsection

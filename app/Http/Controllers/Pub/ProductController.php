@@ -11,37 +11,32 @@ class ProductController extends Controller
 {
     
     public function index(){
-        $products = DB::table('products')
-                    ->join('prices', 'products.id', 'priceable_id')
-                    ->get(); 
+        $products = Product::paginate(12);
+        
         return view('public.products', compact('products'));
     }
 
-    public function indexPriceSort($sort){
-
-        $products = DB::table('products')
-            ->join('prices', 'products.id', 'priceable_id')                    
-            ->get(); 
+    public function indexPriceSort($sort){   
+        
         if ($sort == 'cheap') {
-            $products = collect($products)->sortBy('value')->toArray();
+            $products = Product::join('prices', 'products.id', '=' , 'prices.priceable_id')->orderBy('value', 'ASC')->paginate(12);             
         }
         if ($sort == 'expensive') {
-            $products = collect($products)->sortBy('value')->reverse()->toArray();
+            $products = Product::join('prices', 'products.id', '=' , 'prices.priceable_id')->orderBy('value', 'DESC')->paginate(12);             
         }
 
         return view('public.products', compact('products'));
     }
     public function indexDateSort($sort){
 
-        $products = DB::table('products')
-            ->join('prices', 'products.id', 'priceable_id')                    
-            ->get(); 
-        if ($sort == 'cheap') {
-            $products = collect($products)->sortBy('created_at')->toArray();
+        if ($sort == 'newest') {
+            $products = Product::orderBy('created_at', 'ASC')->paginate(12);
         }
-        if ($sort == 'expensive') {
-            $products = collect($products)->sortBy('created_at')->reverse()->toArray();
+        if ($sort == 'oldest') {
+            $products = Product::orderBy('created_at', 'DESC')->paginate(12);
         }
+
+        
 
         return view('public.products', compact('products'));
     }

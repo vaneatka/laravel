@@ -9,7 +9,12 @@ class Cart extends Model
 {    
     use SoftDeletes;
 
-    public function total_price(){
-        return $this->morphMany(\App\Price::class, 'priceable');
+    public function items(){
+        return $this->hasMany(\App\CartItem::class);
+    }
+
+    public function totalPrice()
+    {
+        return $this->morphOne(\App\Price::class, 'priceable');
     }
 }

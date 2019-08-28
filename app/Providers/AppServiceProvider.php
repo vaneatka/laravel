@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {      
          
         if( \Schema::hasTable('carts') ){
-            $cart = Cart::with('total_price')->first();
+            $cart = Cart::with('totalPrice');
             View::share('cart', $cart);
         }
     }

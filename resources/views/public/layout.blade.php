@@ -10,11 +10,10 @@
 <body>
     <div class="container">
 
-        {{$cart->total_price->first()->value}}
-        {{$cart->total_price->first()->currency->name}}
+        {{ 'Wah'}}
+        {{ 'Wow'}}
         @include('public.navbar')
         @yield('content')
-
     </div>
     
 
