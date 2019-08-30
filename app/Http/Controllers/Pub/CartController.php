@@ -10,21 +10,19 @@ class CartController extends Controller
 {
     public function add($id)
     {
-        
-        CartItem::truncate();
-
-        $cart = Cart::first();
+        $cart = Cart::first();        
         $product = Product::find($id);
         $cartitem = CartItem::create([
             'amount' => 1,
-            'product_id' => $product->id,
+            'product_id' => $id,
             'cart_id' => $cart->id
-        ]);
-
-        
-        // dd($product->prices->first());
-        $cartitem->itemPrice()->save($product->prices->first());
+        ]);        
+        $cartitem->itemPrice()->save($product->prices->first());         
         $cart->items()->save($cartitem);
-        return $id;
+        $cart_cost = $cartitem->itemPrice->value + $cart->totalPrice->value;
+
+        $cart->totalPrice->update(['value' => $cart_cost]);     
+        
+        
     }
 }

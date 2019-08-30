@@ -34,7 +34,14 @@ class ImportController extends Controller
         }
         
         Cart::create();
+        $cart = Cart::first();
+        $cart->totalPrice()->save(Price::create([
+            'value' => 0           
+        ]));
+
+        Cart::first()->totalPrice->currency()->associate($currency)->save();
         
+
         
         return 'done';
     }

@@ -10,8 +10,8 @@
 <body>
     <div class="container">
 
-        {{ 'Wah'}}
-        {{ 'Wow'}}
+        {{ $cart['price'] }}
+        {{ $cart['count'] }}
         @include('public.navbar')
         @yield('content')
     </div>

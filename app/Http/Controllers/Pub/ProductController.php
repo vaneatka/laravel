@@ -33,12 +33,9 @@ class ProductController extends Controller
             $products = Product::orderBy('created_at', 'ASC')->paginate(12);
         }
         if ($sort == 'oldest') {
-            $products = Product::orderBy('created_at', 'DESC')->paginate(12);
-        }
-
-        
+            $products = Product::orderBy('created_at', 'DESC')->paginate(12);        
 
         return view('public.products', compact('products'));
+        }
     }
-    
 }
