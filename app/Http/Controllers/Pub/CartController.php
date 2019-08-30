@@ -19,9 +19,7 @@ class CartController extends Controller
             'amount' => 1,
             'product_id' => $product->id,
             'cart_id' => $cart->id
-        ]);
-
-        
+        ]);        
         // dd($product->prices->first());
         $cartitem->itemPrice()->save($product->prices->first());
         $cart->items()->save($cartitem);

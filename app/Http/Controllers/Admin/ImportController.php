@@ -36,6 +36,6 @@ class ImportController extends Controller
         Cart::create();
         
         
-        return 'done';
+        return back();
     }
 }

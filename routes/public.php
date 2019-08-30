@@ -12,10 +12,10 @@
 */
 
 Route::get('/', function () {
-    return 'Home';
-})->name('home');
+     return view('public.home');})->name('home');
 
 Route::get('/products', 'ProductController@index');
+
 Route::get('/catalog/price/{sort}', 'ProductController@indexPriceSort');
 Route::get('/catalog/date/{sort}', 'ProductController@indexDateSort');
 
