@@ -174,6 +174,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        // service care ofera acces la cosh
+        App\Providers\CartServiceProvider::class,
 
     ],
 

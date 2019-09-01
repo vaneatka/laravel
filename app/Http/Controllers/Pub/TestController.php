@@ -108,15 +108,15 @@ class TestController extends Controller
         $price->currency()->associate($currency)->save();
         $price2->currency()->associate($currency)->save();
         
-        $product= Product::create([
-            'name' => 'ARGH'
-        ]);
+        // $product= Product::create([
+        //     'name' => 'ARGH'
+        // ]);
 
-        $product->prices()->save($price);
+        // $product->prices()->save($price);
         
-        $cart = Cart::create()->total_price()->save($price2);
+        $cart = Cart::create()->totalPrice()->save($price2);
         $cart2 = Cart::create();
-        $cart2->total_price()->save($price);
+        $cart2->totalPrice()->save($price);
 
         
         $cart2->delete();

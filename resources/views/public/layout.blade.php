@@ -9,23 +9,25 @@
 </head>
 <body>
     <div class="container">
+        @isset($cart)            
         <div class="btn-group">
-        <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{ $cart['count'] }} Items in cart. Total Price : {{ $cart['price']->value . ' ' . $cart['price']->currency->code }}
-        </button>
-        <div class="dropdown-menu ">
-            @foreach ($cart['products'] as $number=>$product)
-            <form action="{{route('home')}}/cart/remove/{{$product->id}}"  method="post" class="form-inline p-1">
-                <a class="dropdown-item form-control" href="#"> {{$number+1}} {{$product->name}} </a>
-
-                 @method('delete')
-                @csrf                              
+            <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ $cart['count'] }} Items in cart. Total Price : {{ $cart['price']->value . ' ' . $cart['price']->currency->code }}
+            </button>
+            <div class="dropdown-menu ">
+                @foreach ($cart['products'] as $number=>$product)
+                <form action="{{route('home')}}/cart/remove/{{$product->id}}"  method="post" class="form-inline p-1">
+                    <a class="dropdown-item form-control" href="#"> {{$number+1}} {{$product->name}} </a>
+                    
+                    @method('delete')
+                    @csrf                              
                     <button type="submit" class="btn btn-sm primary ml-auto">Remove</button>
                 </form>
-            @endforeach
-            
+                @endforeach
+                
+            </div>
         </div>
-        </div>
+        @endisset
         
         @include('public.navbar')
         @yield('content')

@@ -51,3 +51,13 @@ categoria-> collapse subcategorie
 
   Price-> product_id -> Product
   ??? ne trebuie Price-> ???-> Cart
+
+
+  -separate CartServiceProvider + autoload
+    - daca apar erori, cache:clear
+  -boot -> only web( not for artisan)
+        -only for some routes
+  -Session Usage
+  -> session <-> Cart <-> current user
+
+  cream un middleware pentru a citi cosul din sesiune CartMiddleware
