@@ -32,16 +32,8 @@ class ImportController extends Controller
             ]);
             $product->prices()->save($price);
         }
-        
-        Cart::create();
-        $cart = Cart::first();
-        $cart->totalPrice()->save(Price::create([
-            'value' => 0           
-        ]));
-
-        Cart::first()->totalPrice->currency()->associate($currency)->save();
-        
-
+        Cart::truncate();
+        \Session::forget('cart_id');
         
         return back();
     }

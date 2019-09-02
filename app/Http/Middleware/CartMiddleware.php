@@ -19,16 +19,14 @@ class CartMiddleware
        
 
         if($request->session()->get('cart_id') == null) { 
+
                 $cart = Cart::create();
-                $request->session()->put('cart_id',$cart->id); 
-        } else {
-            $cart = Cart::find( $request->session()->get('cart_id'));
-            // dump($cart->id);            
+                $request->session()->put('cart_id',$cart->id);    
+            } else {
+               
+            $cart = Cart::find( $request->session()->get('cart_id'));                    
         }
 
-        $price = Price::create(['value' => 0]);
-        $price->currency()->associate(Currency::where('code', 'EUR')->first())->save();        
-        $cart->totalPrice()->save($price);
 
         $extractedCart = Cart::with('totalPrice')->get()->first();
                         $cartItems = CartItem::all();
@@ -36,7 +34,7 @@ class CartMiddleware
                         foreach ($cartItems as $item) {
                             $products[]=Product::with('prices.value')->find($item->product_id);
                         }
-                        // dd($products);
+                        
                         $cart = ['count'=> count(CartItem::all()),
                                  'price'=> $extractedCart->totalPrice,
                                  'items' => $cartItems,

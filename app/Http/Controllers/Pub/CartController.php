@@ -9,8 +9,7 @@ use App\{Cart, CartItem, Product, Price};
 class CartController extends Controller
 {
     public function add($id)
-    {
-       
+    {       
         $cart = Cart::first();        
         $product = Product::find($id);
         if ($cart->items->contains($id)) {            

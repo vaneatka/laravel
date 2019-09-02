@@ -6,6 +6,8 @@ use App\{Cart, CartItem, Product};
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
+use App\Observers\CartObserver;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,7 +26,11 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {      
+    {
+        Cart::observe(CartObserver::class);
+
+
+
     //      if(\Schema::hasTable('carts')){            
     //          if( empty(Cart::all()) ){
     //              $cart = [  'price'=> 0,
