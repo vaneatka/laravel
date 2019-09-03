@@ -18,20 +18,19 @@ class CartMiddleware
     {
        
 
-        if($request->session()->get('cart_id') == null) { 
-
-                $cart = Cart::create();
-                $request->session()->put('cart_id',$cart->id);    
-            } else {
+        // if($request->session()->get('cart_id') == null) { 
+        //         $cart = Cart::create();
+        //         $request->session()->put('cart_id',$cart->id);    
+        //     } else {
                
-            $cart = Cart::find( $request->session()->get('cart_id'));                    
-        }
-
+            // }
+            
+        $cart = Cart::find( $request->session()->get('cart_id'));                    
 
         $extractedCart = Cart::with('totalPrice')->get()->first();
                         $cartItems = CartItem::all();
                         $products = [];
-                        foreach ($cartItems as $item) {
+                        foreach ($cartItems as $item) {                                                      
                             $products[]=Product::with('prices.value')->find($item->product_id);
                         }
                         
