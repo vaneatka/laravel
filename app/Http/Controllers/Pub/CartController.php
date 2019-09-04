@@ -17,11 +17,11 @@ class CartController extends Controller
                 $request->session()->put('cart_id',$cart->id);    
             }
            
-
         $cart = Cart::first();        
         $product = Product::find($id);
-        // dd($cart->items->contains($id));
-        if ($cart->items->contains($id)) {            
+
+        // dd();
+        if ($cart->items->pluck('id')->contains($id)) {            
             return redirect(route('home').'/products');
         }
         
@@ -40,10 +40,11 @@ class CartController extends Controller
 
     public function remove($id){
         
-        $cart = Cart::with('totalPrice')->first();
-       
+        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->first();
+        
         $itemToRemove = $cart->items->where('product_id', $id)->where('deleted_at', null)->first();
-        $itemToRemove = $itemToRemove->with('itemPrice.value')->first();
+        // dd();        
+
         $cart->totalPrice->update([
             'value' => $cart->totalPrice->value - $itemToRemove->itemPrice->value
         ]);

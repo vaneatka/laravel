@@ -12,6 +12,7 @@ class ImportController extends Controller
     //
     public function add()
     {
+        $productCount = 25;
         \Artisan::call('migrate:refresh');
         $currency = Currency::create([
             'code' => 'EUR',
@@ -19,7 +20,7 @@ class ImportController extends Controller
         ]);
 
         $faker = Faker::create();
-        for ($i = 0; $i < 45; $i++) {
+        for ($i = 0; $i < $productCount; $i++) {
             $price = Price::create([
                 'value'=> $faker->randomNumber(3)
             ]);

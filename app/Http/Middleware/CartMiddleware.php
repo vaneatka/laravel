@@ -19,8 +19,8 @@ class CartMiddleware
     {
        
         // if()
-        
-        if (Cart::all()->isEmpty()) {
+        // dd($request->session()->get('cart_id'));
+        if (!\Schema::hasTable('carts') || Cart::all()->isEmpty() ) {
             Session::forget('cart_id');
         }
 
@@ -30,11 +30,11 @@ class CartMiddleware
                 
                 $extractedCart = Cart::with('totalPrice')->get()->first();
                 $cartItems = CartItem::all();
+                $allProducts = Product::with(['prices'])->get();                
                 $products = [];
                 foreach ($cartItems as $item) {                                                      
-                    $products[]=Product::with('prices.value')->find($item->product_id);
-                }
-                
+                    $products[]=$allProducts->find($item->id);
+                }                
                 $cart = ['count'=> count(CartItem::all()),
                 'price'=> $extractedCart->totalPrice,
                 'items' => $cartItems,

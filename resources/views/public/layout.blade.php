@@ -18,7 +18,7 @@
             <div class="dropdown-menu ">
                 @foreach ($cart['products'] as $number=>$product)
                 <form action="{{route('home')}}/cart/remove/{{$product->id}}"  method="post" class="form-inline p-1">
-                    <a class="dropdown-item form-control" href="#"> {{$number+1}} {{$product->name}} </a>
+                    <a class="dropdown-item form-control" href="#"> {{$number+1}} {{$product->name}} {{$product->prices->first()->value}} </a>
                     
                     @method('delete')
                     @csrf                              
