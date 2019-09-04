@@ -20,8 +20,9 @@ class CartController extends Controller
 
         $cart = Cart::first();        
         $product = Product::find($id);
+        // dd($cart->items->contains($id));
         if ($cart->items->contains($id)) {            
-            return back();
+            return redirect(route('home').'/products');
         }
         
         $cartitem = CartItem::create([
@@ -40,7 +41,9 @@ class CartController extends Controller
     public function remove($id){
         
         $cart = Cart::with('totalPrice')->first();
-        $itemToRemove = $cart->items->where('product_id', $id)->first();
+       
+        $itemToRemove = $cart->items->where('product_id', $id)->where('deleted_at', null)->first();
+        $itemToRemove = $itemToRemove->with('itemPrice.value')->first();
         $cart->totalPrice->update([
             'value' => $cart->totalPrice->value - $itemToRemove->itemPrice->value
         ]);

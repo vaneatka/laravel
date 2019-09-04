@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Faker\Factory as Faker;
-use App\{Cart, Product, Currency, Price};
+use App\{Cart, Product, Currency, Price, CartItem};
 
 class ImportController extends Controller
 {
@@ -33,6 +33,7 @@ class ImportController extends Controller
             $product->prices()->save($price);
         }
         Cart::truncate();
+        CartItem::truncate();
         \Session::forget('cart_id');
         
         return back();
