@@ -24,21 +24,16 @@ class CartMiddleware
             Session::forget('cart_id');
         }
 
-        if($request->session()->get('cart_id') != null ) {      
-                
-                $cart = Cart::find( $request->session()->get('cart_id'));                    
-                
-                $extractedCart = Cart::with('totalPrice')->get()->first();
-                $cartItems = CartItem::all();
-                $allProducts = Product::with(['prices'])->get();                
+        if($request->session()->get('cart_id') != null ) {
+                $extractedCart = Cart::with('totalPrice')->find( $request->session()->get('cart_id') );               
+                $cartItems = CartItem::with('product')->get();   
                 $products = [];
                 foreach ($cartItems as $item) {                                                      
-                    $products[]=$allProducts->find($item->id);
+                    $products[]=$item->product;
                 } 
                 $cart = ['count'=> count(CartItem::all()),
                 'price'=> $extractedCart->totalPrice,
-                'items' => $cartItems,
-                'products'=> $products
+                'items' => $cartItems,                
             ];
             
             \View::share('cart' , $cart);

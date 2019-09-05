@@ -16,10 +16,9 @@
                 {{ $cart['count'] }} Items in cart. Total Price : {{ $cart['price']->value . ' ' . $cart['price']->currency->code }}
             </button>
             <div class="dropdown-menu ">                
-                @foreach ($cart['products'] as $number=>$product)
-                <form action="{{route('home')}}/cart/remove/{{$product->id}}"  method="post" class="form-inline p-1">
-                    <a class="dropdown-item form-control" href="#"> {{$product->id}} {{$product->name}} {{$product->prices->first()->value ?? 0}} </a>
-                    
+                @foreach ($cart['items'] as $item)
+                <form action="{{route('home')}}/cart/remove/{{$item->id}}"  method="post" class="form-inline p-1">
+                    <a class="dropdown-item form-control" href="#"> {{$item->id}} {{$item->product->name}} {{$item->product->prices->first()->value ?? 0}} </a>                    
                     @method('delete')
                     @csrf                              
                     <button type="submit" class="btn btn-sm primary ml-auto">Remove</button>
