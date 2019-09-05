@@ -34,7 +34,7 @@ class CartMiddleware
                 $products = [];
                 foreach ($cartItems as $item) {                                                      
                     $products[]=$allProducts->find($item->id);
-                }                
+                } 
                 $cart = ['count'=> count(CartItem::all()),
                 'price'=> $extractedCart->totalPrice,
                 'items' => $cartItems,

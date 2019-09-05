@@ -16,11 +16,9 @@ class CartController extends Controller
                 $cart = Cart::create();
                 $request->session()->put('cart_id',$cart->id);    
             }
-           
-        $cart = Cart::first();        
-        $product = Product::find($id);
-
-        // dd();
+            $cart = Cart::with(['items','totalPrice'])->first();        
+            $product = Product::with('prices')->find($id);
+            
         if ($cart->items->pluck('id')->contains($id)) {            
             return redirect(route('home').'/products');
         }
@@ -30,21 +28,20 @@ class CartController extends Controller
             'product_id' => $id,
             'cart_id' => $cart->id
             ]);        
-           
-        $cartitem->itemPrice()->save($product->prices->first());         
+
+        $cartItemPrice = $product->prices->first()->replicate();       
+        $cartitem->itemPrice()->save($cartItemPrice);         
+        
         $cart->items()->save($cartitem);
         $cart_cost = $cartitem->itemPrice->value + $cart->totalPrice->value;
         $cart->totalPrice->update(['value' => $cart_cost]);             
         return back();
     }
 
-    public function remove($id){
-        
-        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->first();
-        
+    public function remove($id){        
+        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->first();        
         $itemToRemove = $cart->items->where('product_id', $id)->where('deleted_at', null)->first();
-        // dd();        
-
+          
         $cart->totalPrice->update([
             'value' => $cart->totalPrice->value - $itemToRemove->itemPrice->value
         ]);
