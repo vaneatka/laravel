@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pub;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\{Cart, CartItem, Product, Price};
+use Illuminate\View\View;
 
 class CartController extends Controller
 {
@@ -16,10 +17,12 @@ class CartController extends Controller
                 $cart = Cart::create();
                 $request->session()->put('cart_id',$cart->id);    
             }
-            $cart = Cart::with(['items','totalPrice'])->first();        
-            $product = Product::with('prices')->find($id);
-            
-        if ($cart->items->pluck('id')->contains($id)) {            
+
+        $cart = Cart::with(['items','totalPrice'])->find($request->session()->get('cart_id'));        
+        $product = Product::with('prices')->find($id);
+            // dd($cart->items);
+                
+        if ($cart->items->where('product_id', $id)->count()>0) {            
             return redirect(route('home').'/products');
         }
         
@@ -58,5 +61,10 @@ class CartController extends Controller
         }
         return $priceToReturn;
         
+    }
+
+    public function view(Request $request){
+        $cartItems = CartItem::with('product')->where('deleted_at', null)->get();          
+        return View('public.cart_view', compact('cart', 'cartItems'));
     }
 }

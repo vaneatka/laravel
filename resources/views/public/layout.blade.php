@@ -13,18 +13,23 @@
         @if (isset($cart))   
         <div class="btn-group">
             <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ $cart['count'] }} Items in cart. Total Price : {{ $cart['price']->value . ' ' . $cart['price']->currency->code }}
+                {{ $cartItems->count() }} Items in cart. Total Price : {{ $cart->totalPrice->value . ' ' . $cart->totalPrice->currency->code }}
             </button>
-            <div class="dropdown-menu ">                
-                @foreach ($cart['items'] as $item)
-                <form action="{{route('home')}}/cart/remove/{{$item->id}}"  method="post" class="form-inline p-1">
-                    <a class="dropdown-item form-control" href="#"> {{$item->id}} {{$item->product->name}} {{$item->product->prices->first()->value ?? 0}} </a>                    
-                    @method('delete')
-                    @csrf                              
-                    <button type="submit" class="btn btn-sm primary ml-auto">Remove</button>
-                </form>
-                @endforeach
-                
+            <div class="dropdown-menu w-100"> 
+                <ol class="list-group  list-group-flush">
+                    @foreach ($cartItems as $num =>$item)
+                    <li class="list-group-item">
+                        <form action="{{route('home')}}/cart/remove/{{$item->id}}"  method="post" class="form-inline p-1">                    
+                            <a class="dropdown-item form-control" href="#"> {{$num + 1}} {{$item->product->name}} {{$item->itemPrice->value ?? 0}} </a>                    
+                            @method('delete')
+                            @csrf                              
+                            <button type="submit" class="btn btn-sm primary ml-auto">Remove</button>
+                        </form>                        
+                    </li>
+                    @endforeach
+                    
+                </ol> 
+                <a href="{{ route('home')}}/cart/view" class="btn btn-default ml-auto">View Cart</a>   
             </div>
         </div>
         @else
