@@ -24,6 +24,7 @@ Route::get('/catalog', 'CatalogController@index');
 Route::get('/cart/add/{product_id}', 'CartController@add');
 Route::get('/cart/view', 'CartController@view');
 Route::delete('/cart/remove/{cart_item_id}', 'CartController@remove');
+Route::get('/cart/checkout', 'CartController@checkout');
 
 Route::get('/test/run', 'TestController@run');
 

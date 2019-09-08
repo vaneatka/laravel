@@ -27,6 +27,7 @@
     </ol>  
 <h4 class="mt-3">Total Cart Price: {{$cart->totalPrice->value}} {{$cart->totalPrice->currency->code}}</h4>
     
+<a href="{{route('home')}}/cart/checkout">Push me baby one more time!</a>
 
 </div>
 

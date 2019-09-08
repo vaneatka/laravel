@@ -29,7 +29,7 @@
                     @endforeach
                     
                 </ol> 
-                <a href="{{ route('home')}}/cart/view" class="btn btn-default ml-auto">View Cart</a>   
+                <a href="{{ route('home') }}/cart/view" class="btn btn-default ml-auto">View Cart</a>   
             </div>
         </div>
         @else
@@ -40,6 +40,9 @@
 
         {{-- <div id="example"></div> --}}
         
+        
+
+
         @include('public.navbar')
         @yield('content')
     </div>

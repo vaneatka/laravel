@@ -41,9 +41,11 @@ class CartController extends Controller
         return back();
     }
 
-    public function remove($id){        
-        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->first();       
+    public function remove(Request $request){
+        $id = $request->cart_item_id;
+        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->find($request->session()->get('cart_id'));
         $itemToRemove = $cart->items->find($id);
+        
         $itemToRemove->itemPrice->delete();
         $itemToRemove->delete();
 
@@ -64,7 +66,15 @@ class CartController extends Controller
     }
 
     public function view(Request $request){
+        $id = $request->cart_item_id;
+        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->find($request->session()->get('cart_id'));
         $cartItems = CartItem::with('product')->where('deleted_at', null)->get();          
         return View('public.cart_view', compact('cart', 'cartItems'));
     }
+
+    public function checkout(){
+        return View('carts.checkout');
+    }
 }
+
+
