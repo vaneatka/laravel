@@ -18,4 +18,9 @@ class ClientController extends Controller
         ]);
         return redirect()->route('client.subscribe');
     }
+
+    public function profile(){
+        return view('clients/profile');
+    }
+    
 }

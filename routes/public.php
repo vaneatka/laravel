@@ -35,6 +35,11 @@ Route::post('/subscribe', 'ClientController@subscribe');
 
 Route::resource('categories', 'CategoryController');
 
+////////////////////////
+Route::get('/client/profile', 'ClientController@profile')->middleware('auth')->name('client.profile');
+
+// Route::post('/client/create', '\App\Http\Controllers\Auth\RegisterController@create');
+Auth::routes();
 
 
 

@@ -13,8 +13,8 @@
 </ul>
 <div class="tab-content" id="myTabContent">
 
-  @include('clients\form-authentication')
-  @include('clients\form-registration')
+  @include('clients.form-authentication')
+  @include('clients.form-registration')
  
 
 </div>

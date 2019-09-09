@@ -55,7 +55,7 @@ class CartController extends Controller
         return back();        
     }
 
-    public function totalPrice($cart_id){
+    public function totalPrice($cart_id){ 
         $priceToReturn = 0;
         $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->find($cart_id);
         foreach ($cart->items as $item) {
