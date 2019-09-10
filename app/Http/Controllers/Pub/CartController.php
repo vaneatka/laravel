@@ -44,8 +44,7 @@ class CartController extends Controller
     public function remove(Request $request){
         $id = $request->cart_item_id;
         $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->find($request->session()->get('cart_id'));
-        $itemToRemove = $cart->items->find($id);
-        
+        $itemToRemove = $cart->items->find($id);        
         $itemToRemove->itemPrice->delete();
         $itemToRemove->delete();
 
