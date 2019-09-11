@@ -11,13 +11,14 @@
 <body>
     <div class="container">
         @if (isset($cart))   
+        
         <div class="btn-group">
             <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ $cartItems->count() }} Items in cart. Total Price : {{ $cart->totalPrice->value . ' ' . $cart->totalPrice->currency->code }}
+                {{ $cart->items->count() }} Items in cart. Total Price : {{ $cart->totalPrice->value . ' ' . $cart->totalPrice->currency->code }}
             </button>
             <div class="dropdown-menu w-100"> 
                 <ol class="list-group  list-group-flush">
-                    @foreach ($cartItems as $num =>$item)
+                    @foreach ($cart->items as $num =>$item)
                     <li class="list-group-item">
                         <form action="{{route('home')}}/cart/remove/{{$item->id}}"  method="post" class="form-inline p-1">                    
                             <a class="dropdown-item form-control" href="#"> {{$num + 1}} {{$item->product->name}} {{$item->itemPrice->value ?? 0}} </a>                    

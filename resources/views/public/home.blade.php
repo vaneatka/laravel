@@ -11,6 +11,9 @@
             <li class="list-group-item"><a href="{{ route('home') }}/products"> Products </a></li>
             <li class="list-group-item"><a href="{{ route('home') }}/catalog">Catalogue</a></li> 
             <li class="list-group-item"><a href="{{ route('home') }}/subscribe">Subscribe</a></li> 
+            <li class="list-group-item"><a href="{{ route('home') }}/cart/checkout">Checkout</a></li> 
+            <li class="list-group-item"><a href="{{ route('home') }}/cart/view">Cart</a></li> 
+            <li class="list-group-item"><a href="{{ route('home') }}/client/profile">Logout</a></li> 
         </ul>
         
     </div>

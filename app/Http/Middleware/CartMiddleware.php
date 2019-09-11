@@ -25,8 +25,10 @@ class CartMiddleware
         }
 
         if($request->session()->get('cart_id') != null ) {
-                $cart = Cart::with('totalPrice')->find( $request->session()->get('cart_id') );               
-                $cartItems = CartItem::with('product')->where('deleted_at', null)->get();                 
+                $cart = Cart::with(['totalPrice', 'items', 'items.product', 'items.itemPrice'])->find( $request->session()->get('cart_id') );               
+                $cartItems = $cart->items();        
+                // $cartItems = CartItem::with(['product', 'cart'])->where('deleted_at', null)->where('cart.id', $cart->id)->get();        
+                         
             
             \View::share(compact('cart', 'cartItems'));
         }

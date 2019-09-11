@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Pub\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Cart;
+use Illuminate\Support\Facades\Request;
 
 class LoginController extends Controller
 {
@@ -39,5 +41,13 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('carts.checkout');
+    }
+
+    public function redirectPath(Request $request){
+        if (Cart::find($request->session()->get('cart_id'))->isEmpty()) {
+            return '/client/profile';
+        } else {
+            return '/cart/payment';
+        }
     }
 }
