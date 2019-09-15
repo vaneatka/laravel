@@ -17,4 +17,8 @@ class Cart extends Model
     {
         return $this->morphOne(\App\Price::class, 'priceable');
     }
+
+    public function user(){
+        return $this->belongsTo(\App\User::class);
+    }
 }

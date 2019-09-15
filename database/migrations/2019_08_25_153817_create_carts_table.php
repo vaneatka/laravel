@@ -17,6 +17,7 @@ class CreateCartsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->softDeletes(); // ca sa putem reversa stergerea
+            $table->bigInteger('user_id')->nullable();
             
         });
     }

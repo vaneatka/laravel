@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\{Cart, Price, Currency};
+use App\{Cart, Price, Currency, User};
 
 class CartObserver
 {
@@ -18,6 +18,10 @@ class CartObserver
         $currency = Currency::first();
         $price->currency()->associate($currency)->save();
         $cart->totalPrice()->save($price);
+        if (\Auth::id() != null) {
+            $user = User::find(\Auth::id());
+            $cart->user()->associate($user)->save();
+        }
     }
 
     /**

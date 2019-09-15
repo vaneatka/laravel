@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/client/profile';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -43,11 +43,17 @@ class LoginController extends Controller
         return view('carts.checkout');
     }
 
-    public function redirectPath(Request $request){
-        if (Cart::find($request->session()->get('cart_id'))->isEmpty()) {
+    public function redirectPath(Request $request = null)
+    {
+        
+        if($request == null){
             return '/client/profile';
-        } else {
-            return '/cart/payment';
-        }
+        }   else  {
+            if (Cart::find($request->session()->get('cart_id'))->isEmpty() || $request->session()->get('cart_id') == null) {
+                return '/client/profile';
+            } else {                
+                return '/cart/payment';
+            }            
+        } 
     }
 }
