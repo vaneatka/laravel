@@ -44,16 +44,19 @@ class LoginController extends Controller
     }
 
     public function redirectPath(Request $request = null)
-    {
-        
-        if($request == null){
-            return '/client/profile';
-        }   else  {
-            if (Cart::find($request->session()->get('cart_id'))->isEmpty() || $request->session()->get('cart_id') == null) {
+    {   
+
+        if($request == null){            
+            return '/client/profile'; 
+        }   else  {            
+            if (Cart::find($request->session()->get('cart_id'))->isEmpty() && $request->session()->get('cart_id') == null) {
                 return '/client/profile';
-            } else {                
-                return '/cart/payment';
-            }            
+            } else  if(!Cart::find($request->session()->get('cart_id'))->isEmpty()){
+             return '/cart/payment';
+            } else {
+                return '/client/profile';
+            }     
         } 
     }
+    
 }

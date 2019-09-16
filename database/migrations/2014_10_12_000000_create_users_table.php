@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->string('fullname', 60);
+            $table->string('role', 15)->default('client');
             $table->boolean('is_vip')->default(false);
             $table->boolean('is_company')->default(false);
         });

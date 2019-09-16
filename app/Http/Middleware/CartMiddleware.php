@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\{Cart, CartItem, Product, Price,Currency};
+use App\{Cart, CartItem, Product, Price,Currency, User};
 use Illuminate\Support\Facades\Session;
 
 class CartMiddleware
@@ -23,13 +23,20 @@ class CartMiddleware
         if (!\Schema::hasTable('carts') || Cart::all()->isEmpty() ) {
             Session::forget('cart_id');
         }
-    // \Auth::logout();
+        
         if($request->session()->get('cart_id') != null ) {
+            if ($request->session()->get('cart_id') == null && \Auth::id() != null){
+                $user = User::with('cart')->find(\Auth::id());
+                $request->session()->put('cart_id', $user->cart->id);
+            }
                 $cart = Cart::with(['totalPrice', 'items', 'items.product', 'items.itemPrice'])->find( $request->session()->get('cart_id') );               
                 $cartItems = $cart->items();        
                 // $cartItems = CartItem::with(['product', 'cart'])->where('deleted_at', null)->where('cart.id', $cart->id)->get();
             \View::share(compact('cart', 'cartItems'));
         }
+
+
+
             return $next($request);
     }
 }

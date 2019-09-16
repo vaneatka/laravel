@@ -14,6 +14,10 @@ class User extends Authenticatable
     public function cart(){
         return $this->hasOne(\App\Cart::class);
     }
+
+    public function makeAdmin($id){
+        dd($this);
+    }
     /**
      * The attributes that are mass assignable.
      *
