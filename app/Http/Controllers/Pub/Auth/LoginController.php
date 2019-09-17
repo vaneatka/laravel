@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Pub\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Cart;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -43,17 +43,20 @@ class LoginController extends Controller
         return view('carts.checkout');
     }
 
-    public function redirectPath(Request $request = null)
+    public function redirectPath( )
     {   
-
-        if($request == null){            
-            return '/client/profile'; 
+        $request = request();
+        // dd($request);
+        if($request->session()->get('cart_id') == null){         
+            return '/client/profile';                
         }   else  {            
             if (Cart::find($request->session()->get('cart_id'))->isEmpty() && $request->session()->get('cart_id') == null) {
                 return '/client/profile';
             } else  if(!Cart::find($request->session()->get('cart_id'))->isEmpty()){
-             return '/cart/payment';
+                
+                return '/cart/payment';
             } else {
+                
                 return '/client/profile';
             }     
         } 

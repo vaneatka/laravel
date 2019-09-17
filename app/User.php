@@ -16,7 +16,7 @@ class User extends Authenticatable
     }
 
     public function makeAdmin($id){
-        dd($this);
+        
     }
     /**
      * The attributes that are mass assignable.
