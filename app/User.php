@@ -15,10 +15,12 @@ class User extends Authenticatable
         return $this->hasOne(\App\Cart::class);
     }
 
-    public function makeAdmin($id){
-        
+    public function makeAdmin(){
+        $this->role = "administrator";       
+        return $this;
     }
-    /**
+
+       /**
      * The attributes that are mass assignable.
      *
      * @var array

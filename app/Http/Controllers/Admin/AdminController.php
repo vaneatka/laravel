@@ -31,4 +31,8 @@ class AdminController extends Controller
         Email::truncate();
         return redirect()->route('admin.subscribers');
     }
+
+    public function dashboard(){
+        return 'admin panel!';
+    }
 }

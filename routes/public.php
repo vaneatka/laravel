@@ -24,7 +24,10 @@ Route::get('/catalog', 'CatalogController@index');
 Route::get('/cart/add/{product_id}', 'CartController@add');
 Route::get('/cart/view', 'CartController@view');
 Route::delete('/cart/remove/{cart_item_id}', 'CartController@remove');
+
 Route::get('/cart/checkout', 'CartController@checkout');
+Route::get('/cart/payment', 'CartController@payment');
+
 
 Route::get('/test/run', 'TestController@run');
 
@@ -40,7 +43,3 @@ Route::get('/client/profile', 'ClientController@profile')->middleware('auth')->n
 
 // Route::post('/client/create', '\App\Http\Controllers\Auth\RegisterController@create');
 Auth::routes();
-
-
-
-

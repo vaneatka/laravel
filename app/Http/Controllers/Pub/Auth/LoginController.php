@@ -46,20 +46,20 @@ class LoginController extends Controller
     public function redirectPath( )
     {   
         $request = request();
-        // dd($request);
-        if($request->session()->get('cart_id') == null){         
-            return '/client/profile';                
-        }   else  {            
-            if (Cart::find($request->session()->get('cart_id'))->isEmpty() && $request->session()->get('cart_id') == null) {
-                return '/client/profile';
-            } else  if(!Cart::find($request->session()->get('cart_id'))->isEmpty()){
-                
+        
+        if (\Auth::id()) {    
+            $cart = Cart::where('user_id', \Auth::id())->with('items')->get()->first();
+            if(\Auth::user()->role == "administrator"){                
+                return '/admin/dashboard';
+            }
+
+            if (!$cart->items->isEmpty()) {   
                 return '/cart/payment';
-            } else {
-                
+            } else {                
                 return '/client/profile';
-            }     
-        } 
+            } 
+        }
+            
     }
     
 }

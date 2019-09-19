@@ -74,6 +74,10 @@ class CartController extends Controller
     public function checkout(){
         return View('carts.checkout');
     }
+
+    public function payment(){
+        return 'Select Payment Method';
+    }
 }
 
 

@@ -17,32 +17,34 @@ class CartMiddleware
      */
     public function handle($request, Closure $next)
     {
-       
-        // if()
-        // dd(\Auth::id());
-        if (!\Schema::hasTable('carts') || Cart::all()->isEmpty() ) {
-            Session::forget('cart_id');
+        if(\Auth::id()){            
+            $request->session()->put('cart_id', \Auth::id());
         }
-        
-        if($request->session()->get('cart_id') != null ) {
-            
-                $cart = Cart::with(['totalPrice', 'items', 'items.product', 'items.itemPrice'])->find( $request->session()->get('cart_id') );               
-                $cartItems = $cart->items();        
-                // $cartItems = CartItem::with(['product', 'cart'])->where('deleted_at', null)->where('cart.id', $cart->id)->get();
-            \View::share(compact('cart', 'cartItems'));
-        } else {
-            $user = User::with('cart')->find(\Auth::id());
-            if($user == null){
-                $request->session()->put('cart_id', null);
-            } else {
-                if($user->cart == null){
-                    $cart = Cart::create();
-                    $user->cart()->save($cart);
-                }
-                
-                $request->session()->put('cart_id', $user->cart->id);
+        // dd(\Auth::id());
+
+        if (!\Schema::hasTable('carts') || Cart::all()->isEmpty() ) {
+            if(!\Auth::id()){
+                Session::forget('cart_id');
             }
         }
+        
+        if($request->session()->get('cart_id')) {
+                // dd(\Auth::id());    
+                if (\Auth::check()) {
+                    if(!Cart::where('user_id', \Auth::id())->get()->isEmpty()){                        
+                        $user = User::with('cart')->find(\Auth::id());
+                        $request->session()->put('cart_id', $user->cart->id);
+                    } else {
+                        $user = User::find(\Auth::id());
+                        $cart = Cart::create();
+                        $user->cart()->save($cart);                        
+                    }     
+                }
+
+                $cart = Cart::with(['totalPrice', 'items', 'items.product', 'items.itemPrice'])->find( $request->session()->get('cart_id') );  
+                \View::share(compact('cart'));
+        }
+
             return $next($request);
     }
 }

@@ -23,5 +23,7 @@ Route::resource('categories','CategoryController');
 
 Route::get('/products','ImportController@add');
 
+Route::get('/dashboard', 'AdminController@dashboard');
+
 
 
