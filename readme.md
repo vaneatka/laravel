@@ -61,3 +61,12 @@ categoria-> collapse subcategorie
   -> session <-> Cart <-> current user
 
   cream un middleware pentru a citi cosul din sesiune CartMiddleware
+
+
+
+  1 punct, de integrat in layout + bootstrapp
+  2. din json obtinut din charge, de extras starea, si de afisat mesajul(succes sau ba)
+      daca tranzactia a fost cu succes, cosul care este al userului tre de setat achitat.(paid)
+      de adaugat un filtru la cartMiddleware, asa incit sa se afiseze doar cart cu status open.(atentie la id din sesiune)
+
+      pina sa trimitem cererea de achitare, suma si curency tre de scos din totalPrice, sa se adaoge automat % luat la tranzactie

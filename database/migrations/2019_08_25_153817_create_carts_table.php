@@ -18,7 +18,7 @@ class CreateCartsTable extends Migration
             $table->timestamps();
             $table->softDeletes(); // ca sa putem reversa stergerea
             $table->bigInteger('user_id')->nullable();
-            
+            $table->string('status')->default('open'); // canceled, blocked
         });
     }
 

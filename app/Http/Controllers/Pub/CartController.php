@@ -76,8 +76,19 @@ class CartController extends Controller
     }
 
     public function payment(){
-        return 'Select Payment Method';
+        return View('carts.payment');
     }
+
+    public function charge(Request $request){
+
+        $amount = 500000;
+        $currency = 'USD';  
+        $token = $request->stripeToken;
+        \Stripe\Stripe::setApiKey('sk_test_fzGjXD0GZ545Bjqancp1pmef004915MP0V');
+        $charge = \Stripe\Charge::create(['amount' => $amount, 'currency' => $currency , 'source' => $token]);
+        echo $charge;
+    
+}
 }
 
 

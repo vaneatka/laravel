@@ -27,6 +27,7 @@ Route::delete('/cart/remove/{cart_item_id}', 'CartController@remove');
 
 Route::get('/cart/checkout', 'CartController@checkout');
 Route::get('/cart/payment', 'CartController@payment');
+Route::post('/cart/charge', 'CartController@charge');
 
 
 Route::get('/test/run', 'TestController@run');
