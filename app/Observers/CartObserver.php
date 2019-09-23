@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\{Cart, Price, Currency, User};
+use Illuminate\Support\Facades\Session;
 
 class CartObserver
 {
@@ -18,9 +19,11 @@ class CartObserver
         $currency = Currency::first();
         $price->currency()->associate($currency)->save();
         $cart->totalPrice()->save($price);
-        if (\Auth::id() != null) {
+        
+       
+        if (\Auth::id()) {
             $user = User::find(\Auth::id());
-            $cart->user()->associate($user)->save();
+            $cart->user()->associate($user)->save();      
         }
     }
 

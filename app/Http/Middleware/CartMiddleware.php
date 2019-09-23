@@ -42,7 +42,7 @@ class CartMiddleware
                     }     
                 }
                 $cart = Cart::with(['totalPrice', 'items', 'items.product', 'items.itemPrice'])->where('status', 'open')->find($request->session()->get('cart_id') ); 
-                // dd($cart); 
+                // dd($request->session()->get('cart_id')); 
                 \View::share(compact('cart'));
         }
 

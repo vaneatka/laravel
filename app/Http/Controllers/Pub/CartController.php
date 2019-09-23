@@ -15,23 +15,19 @@ class CartController extends Controller
         if($request->session()->get('cart_id') == null) {      
                 $cart = Cart::create();
                 $request->session()->put('cart_id',$cart->id);    
-        }
-        
-        $cart = Cart::with(['items','totalPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));     
+        }        
+        $cart = Cart::with(['items','totalPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));    
         
         if ($cart == null) {
             $cart = Cart::create();
             $request->session()->put('cart_id',$cart->id);  
         }
-        // dd($cart, $request->session()->get('cart_id')); 
-        $product = Product::with('prices')->find($id);
-            // dd($cart->items);
-                
-        if ($cart->items->where('product_id', $id)->count()>0) {
-
-            return redirect(route('home').'/products');
-        }
         
+        // dd($cart, $request->session()->get('cart_id')); 
+        $product = Product::with('prices')->find($id);        
+        if ($cart->items->where('product_id', $id)->count()>0) {
+            return redirect(route('home').'/products');
+        }        
         $cartitem = CartItem::create([
             'amount' => 1,
             'product_id' => $id,
@@ -85,7 +81,7 @@ class CartController extends Controller
     }
 
     public function charge(Request $request){
-        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));  
+        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));   
         $amount = $cart->totalPrice->value*100; // stripe gets a full price with centimes
         $currency = $cart->totalPrice->currency->code;  
         $token = $request->stripeToken;

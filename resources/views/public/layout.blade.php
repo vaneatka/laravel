@@ -11,35 +11,38 @@
 </head>
 <body>
     <div class="container">
-        @if (isset($cart) && count($cart->items)>0)   
-        
-        <div class="btn-group">
-            <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ $cart->items->count() }} Items in cart. Total Price : {{ $cart->totalPrice->value . ' ' . $cart->totalPrice->currency->code }}
-            </button>
-            <div class="dropdown-menu w-100"> 
-                <ol class="list-group  list-group-flush">
-                    @foreach ($cart->items as $num =>$item)
-                    <li class="list-group-item">
-                        <form action="{{route('home')}}/cart/remove/{{$item->id}}"  method="post" class="form-inline p-1">                    
-                            <a class="dropdown-item form-control" href="#"> {{$num + 1}} {{$item->product->name}} {{$item->itemPrice->value ?? 0}} </a>                    
-                            @method('delete')
-                            @csrf                              
-                            <button type="submit" class="btn btn-sm primary ml-auto">Remove</button>
-                        </form>                        
-                    </li>
-                    @endforeach
-                    
-                </ol> 
-                <a href="{{ route('home') }}/cart/view" class="btn btn-default ml-auto">View Cart</a>   
+        <div class="head d-flex">
+            @if (isset($cart) && count($cart->items)>0)        
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{ $cart->items->count() }} Items in cart. Total Price : {{ $cart->totalPrice->value . ' ' . $cart->totalPrice->currency->code }}
+                </button>
+                <div class="dropdown-menu w-100"> 
+                    <ol class="list-group  list-group-flush">
+                        @foreach ($cart->items as $num =>$item)
+                        <li class="list-group-item">
+                            <form action="{{route('home')}}/cart/remove/{{$item->id}}"  method="post" class="form-inline p-1">                    
+                                <a class="dropdown-item form-control" href="#"> {{$num + 1}} {{$item->product->name}} {{$item->itemPrice->value ?? 0}} </a>                    
+                                @method('delete')
+                                @csrf                              
+                                <button type="submit" class="btn btn-sm primary ml-auto">Remove</button>
+                            </form>                        
+                        </li>
+                        @endforeach
+                        
+                    </ol> 
+                    <a href="{{ route('home') }}/cart/view" class="btn btn-default ml-auto">View Cart</a>   
+                </div>
             </div>
+            @else
+            <div class="btn-group">
+                Cart empty
+            </div>
+            @endif
+            
+            <span class="ml-auto">Log Info</span>
         </div>
-        @else
-         <div class="btn-group">
-           Cart empty
-        </div>
-        @endif($)            
-
+            
         {{-- <div id="example"></div> --}}
         
         
