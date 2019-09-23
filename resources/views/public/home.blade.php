@@ -17,8 +17,9 @@
         </ul>
         
     </div>
-    <div class="col-lg-10 d-flex justify-content-center">
-        <h1>HOME</h1>
+    <div class="col-lg-10 d-flex flex-column align-items-center justify-content-center p-5">
+        <h1>Welcome to the Candy's Shop</h1>        
+        <div class="border border-primary rounded-lg"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Soviet_jars.jpg" alt="banca" class="img-fluid"></div>
     </div>
 </div>
 

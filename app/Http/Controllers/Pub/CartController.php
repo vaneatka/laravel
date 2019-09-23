@@ -12,17 +12,23 @@ class CartController extends Controller
     public function add(Request $request)
     {       
         $id = $request->product_id;
-
-        if($request->session()->get('cart_id') == null) { 
+        if($request->session()->get('cart_id') == null) {      
                 $cart = Cart::create();
                 $request->session()->put('cart_id',$cart->id);    
-            }
-
-        $cart = Cart::with(['items','totalPrice'])->find($request->session()->get('cart_id'));        
+        }
+        
+        $cart = Cart::with(['items','totalPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));     
+        
+        if ($cart == null) {
+            $cart = Cart::create();
+            $request->session()->put('cart_id',$cart->id);  
+        }
+        // dd($cart, $request->session()->get('cart_id')); 
         $product = Product::with('prices')->find($id);
             // dd($cart->items);
                 
-        if ($cart->items->where('product_id', $id)->count()>0) {            
+        if ($cart->items->where('product_id', $id)->count()>0) {
+
             return redirect(route('home').'/products');
         }
         
@@ -64,31 +70,31 @@ class CartController extends Controller
         
     }
 
-    public function view(Request $request){
-        $id = $request->cart_item_id;
-        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->find($request->session()->get('cart_id'));
-        $cartItems = CartItem::with('product')->where('deleted_at', null)->get();          
-        return View('public.cart_view', compact('cart', 'cartItems'));
+    public function view(Request $request){       
+        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));        
+        return View('public.cart_view', compact('cart'));
     }
 
     public function checkout(){
         return View('carts.checkout');
     }
 
-    public function payment(){
-        return View('carts.payment');
+    public function payment(Request $request){ 
+        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));
+        return View('carts.payment', compact('cart'));
     }
 
     public function charge(Request $request){
-
-        $amount = 500000;
-        $currency = 'USD';  
+        $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));  
+        $amount = $cart->totalPrice->value*100; // stripe gets a full price with centimes
+        $currency = $cart->totalPrice->currency->code;  
         $token = $request->stripeToken;
         \Stripe\Stripe::setApiKey('sk_test_fzGjXD0GZ545Bjqancp1pmef004915MP0V');
         $charge = \Stripe\Charge::create(['amount' => $amount, 'currency' => $currency , 'source' => $token]);
-        echo $charge;
-    
-}
+        $message = $charge->status;
+        $cart->update(['status' => 'sold']);
+        return View('carts.payment', compact('cart', 'message')); 
+    }
 }
 
 

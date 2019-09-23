@@ -33,15 +33,16 @@ class CartMiddleware
                 if (\Auth::check()) {
                     if(!Cart::where('user_id', \Auth::id())->get()->isEmpty()){                        
                         $user = User::with('cart')->find(\Auth::id());
-                        $request->session()->put('cart_id', $user->cart->id);
+                        // dd($user->cart->first());
+                        $request->session()->put('cart_id', $user->cart->first()->id);
                     } else {
                         $user = User::find(\Auth::id());
                         $cart = Cart::create();
                         $user->cart()->save($cart);                        
                     }     
                 }
-
-                $cart = Cart::with(['totalPrice', 'items', 'items.product', 'items.itemPrice'])->find( $request->session()->get('cart_id') );  
+                $cart = Cart::with(['totalPrice', 'items', 'items.product', 'items.itemPrice'])->where('status', 'open')->find($request->session()->get('cart_id') ); 
+                // dd($cart); 
                 \View::share(compact('cart'));
         }
 

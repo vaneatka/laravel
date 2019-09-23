@@ -1,18 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="{{asset('css/stripe.css')}}">
-        <title>Document</title>
-    </head>
-    <body>
-        
-    <form action="{{route('home')}}/cart/charge" method="post" id="payment-form">
-            <div class="form-row">
+@extends('public.layout')
+
+@push('styles')
+<link rel="stylesheet" href="{{asset('css/stripe.css')}}">    
+@endpush
+    
+    @section('content')
+
+        @isset($message)
+            <h2>{{$message}}</h2>            
+        @endisset
+    
+    You are going to buy:
+    
+    <ul class="list-group">
+        @foreach ($cart->items as $item)
+        <li class="list-group-item w-25 d-flex"><div class="mr-auto">{{$item->product->name}}</div>  <div class="ml-auto">{{$item->product->prices->first()->value}} {{$item->product->prices->first()->currency->code}}</div> </li>            
+        @endforeach
+    </ul>
+       
+    Total cart price : {{$cart->totalPrice->value}} {{$item->product->prices->first()->currency->code}}
+    <form action="{{route('home')}}/cart/charge" method="post" id="payment-form"  class="mt-3">
+        <div class="form-group">
                 <label for="card-element">
-                    Credit or debit card
+                    Submit your credit card
                 </label>
                 <div id="card-element">
                     <!-- A Stripe Element will be inserted here. -->
@@ -22,10 +32,13 @@
                 <div id="card-errors" role="alert"></div>
             </div>
             @csrf
-            <button>Submit Payment</button>
+            <button type="submit" class="btn btn-primary">Submit Payment</button>
         </form>
         
+        @endsection
+
+        @push('scripts')
         <script src="https://js.stripe.com/v3/"></script>
-        <script src="{{asset('js/stripe.js')}}"></script>
-    </body>
-</html>
+        <script src="{{asset('js/stripe.js')}}"></script>            
+        @endpush
+ 

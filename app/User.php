@@ -12,7 +12,7 @@ class User extends Authenticatable
 
 
     public function cart(){
-        return $this->hasOne(\App\Cart::class);
+        return $this->hasMany(\App\Cart::class);
     }
 
     public function makeAdmin(){
