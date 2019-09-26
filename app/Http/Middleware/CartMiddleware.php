@@ -17,34 +17,28 @@ class CartMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(\Auth::id()){            
-            $request->session()->put('cart_id', \Auth::id());
-        }
-        // dd(\Auth::id());
+        if(\Auth::id()){
+            $user = User::with(['cart', 'cart.totalPrice', 'cart.items', 'cart.items.product', 'cart.items.itemPrice','cart.totalPrice.currency'])->find(\Auth::id());
+            $usersCart = $user->cart->filter(function ($value, $key) {
+                return $key != 'open';
+            })->first(); 
+            if (isset($usersCart)) {
+                $request->session()->put('cart_id', $usersCart->id);                
+            }
+            // dd(session('cart_id'));
+        }        
 
         if (!\Schema::hasTable('carts') || Cart::all()->isEmpty() ) {
             if(!\Auth::id()){
                 Session::forget('cart_id');
             }
-        }
-        
-        if($request->session()->get('cart_id')) {
-                // dd(\Auth::id());    
-                if (\Auth::check()) {
-                    if(!Cart::where('user_id', \Auth::id())->get()->isEmpty()){                        
-                        $user = User::with('cart')->find(\Auth::id());
-                        // dd($user->cart->first());
-                        $request->session()->put('cart_id', $user->cart->first()->id);
-                    } else {
-                        $user = User::find(\Auth::id());
-                        $cart = Cart::create();
-                        $user->cart()->save($cart);                        
-                    }     
-                }
-                $cart = Cart::with(['totalPrice', 'items', 'items.product', 'items.itemPrice'])->where('status', 'open')->find($request->session()->get('cart_id') ); 
-                // dd($request->session()->get('cart_id')); 
-                \View::share(compact('cart'));
-        }
+        }   
+
+            if (isset($user)) {                
+                $cart = $user->cart->first(); 
+                // dd($cart); 
+                \View::share(compact('cart'));                
+            }
 
             return $next($request);
     }

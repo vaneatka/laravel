@@ -12,18 +12,23 @@ class CartController extends Controller
     public function add(Request $request)
     {       
         $id = $request->product_id;
-        if($request->session()->get('cart_id') == null) {      
-                $cart = Cart::create();
-                $request->session()->put('cart_id',$cart->id);    
-        }        
-        $cart = Cart::with(['items','totalPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));    
+
+        $sessionCart = session('cart_id');
+        // dd($sessionCart);
+        $cart = Cart::with(['items','totalPrice'])->where('status', 'open')->find($sessionCart);
+
+        // if($sessionCart == null && $cart == null ) {      
+        //         $cart = Cart::create();
+        //         session(['cart_id' => $cart->id]);    
+        // }
         
-        if ($cart == null) {
-            $cart = Cart::create();
-            $request->session()->put('cart_id',$cart->id);  
-        }
         
-        // dd($cart, $request->session()->get('cart_id')); 
+        // if ($cart == null) {
+        //     $cart = Cart::create();
+        //     $request->session()->put('cart_id',$cart->id);  
+        // }
+        // dd($cart, $request->session()->get('cart_id'));
+
         $product = Product::with('prices')->find($id);        
         if ($cart->items->where('product_id', $id)->count()>0) {
             return redirect(route('home').'/products');

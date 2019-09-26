@@ -18,8 +18,7 @@ class CartObserver
         $price = Price::create(['value'=>0]);
         $currency = Currency::first();
         $price->currency()->associate($currency)->save();
-        $cart->totalPrice()->save($price);
-        
+        $cart->totalPrice()->save($price);         
        
         if (\Auth::id()) {
             $user = User::find(\Auth::id());
