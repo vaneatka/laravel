@@ -23,9 +23,14 @@ class CartMiddleware
                 return $key != 'open';
             })->first(); 
             if (isset($usersCart)) {
-                $request->session()->put('cart_id', $usersCart->id);                
+                $request->session()->put('cart_id', $usersCart->id);
+                $cart = $user->cart->first(); 
+                \View::share(compact('cart'));
             }
+            
             // dd(session('cart_id'));
+                                           
+            
         }        
 
         if (!\Schema::hasTable('carts') || Cart::all()->isEmpty() ) {
@@ -34,11 +39,6 @@ class CartMiddleware
             }
         }   
 
-            if (isset($user)) {                
-                $cart = $user->cart->first(); 
-                // dd($cart); 
-                \View::share(compact('cart'));                
-            }
 
             return $next($request);
     }

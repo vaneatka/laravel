@@ -16,7 +16,7 @@
             <div class="btn-group">
                 <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{-- @dump($cart) --}}
-                    {{-- {{ $cart->items->count() }} Items in cart. Total Price : {{ $cart->totalPrice->value . ' ' . $cart->totalPrice->currency->code }} --}}
+                    {{ $cart->items->count() }} Items in cart. Total Price : {{ $cart->totalPrice->value . ' ' . $cart->totalPrice->currency->code }}
                 </button>
                 <div class="dropdown-menu w-100"> 
                     <ol class="list-group  list-group-flush">

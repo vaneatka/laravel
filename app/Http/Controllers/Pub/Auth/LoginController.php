@@ -48,16 +48,18 @@ class LoginController extends Controller
         $request = request();
         
         if (\Auth::id()) {    
-            $cart = Cart::where('user_id', \Auth::id())->with('items')->get()->first();
+            $cart = Cart::where('user_id', \Auth::id())->with('items')->where('status', 'open')->get()->first();
+                        
             if(\Auth::user()->role == "administrator"){                
                 return '/admin/dashboard';
             }
-
-            if (!$cart->items->isEmpty()) {   
-                return '/cart/payment';
-            } else {                
-                return '/client/profile';
-            } 
+        if ($cart) {
+                if (!$cart->items->isEmpty()) {   
+                    return '/cart/payment';
+                } else {                
+                    return '/client/profile';
+                } 
+            }
         }
             
     }

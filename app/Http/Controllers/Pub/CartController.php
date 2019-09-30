@@ -23,10 +23,10 @@ class CartController extends Controller
         // }
         
         
-        // if ($cart == null) {
-        //     $cart = Cart::create();
-        //     $request->session()->put('cart_id',$cart->id);  
-        // }
+        if ($cart == null) {
+            $cart = Cart::create();
+            $request->session()->put('cart_id',$cart->id);  
+        }
         // dd($cart, $request->session()->get('cart_id'));
 
         $product = Product::with('prices')->find($id);        
@@ -94,6 +94,7 @@ class CartController extends Controller
         $charge = \Stripe\Charge::create(['amount' => $amount, 'currency' => $currency , 'source' => $token]);
         $message = $charge->status;
         $cart->update(['status' => 'sold']);
+        // $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));   
         return View('carts.payment', compact('cart', 'message')); 
     }
 }
