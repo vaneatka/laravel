@@ -47,13 +47,13 @@ class LoginController extends Controller
     {   
         $request = request();
         
-        if (\Auth::id()) {    
-            $cart = Cart::where('user_id', \Auth::id())->with('items')->where('status', 'open')->get()->first();
-                        
+        if (\Auth::id()) {
+            $cart = Cart::where('user_id', \Auth::id())->with('items')->where('status', 'open')->get()->first();               
             if(\Auth::user()->role == "administrator"){                
                 return '/admin/dashboard';
             }
         if ($cart) {
+            session(['cart_id' => $cart->id]);
                 if (!$cart->items->isEmpty()) {   
                     return '/cart/payment';
                 } else {                

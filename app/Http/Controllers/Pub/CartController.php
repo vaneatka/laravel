@@ -4,31 +4,16 @@ namespace App\Http\Controllers\Pub;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\{Cart, CartItem, Product, Price};
+use App\{Cart, CartItem, Product};
 use Illuminate\View\View;
 
 class CartController extends Controller
 {
     public function add(Request $request)
     {       
-        $id = $request->product_id;
-
-        $sessionCart = session('cart_id');
-        // dd($sessionCart);
-        $cart = Cart::with(['items','totalPrice'])->where('status', 'open')->find($sessionCart);
-
-        // if($sessionCart == null && $cart == null ) {      
-        //         $cart = Cart::create();
-        //         session(['cart_id' => $cart->id]);    
-        // }
-        
-        
-        if ($cart == null) {
-            $cart = Cart::create();
-            $request->session()->put('cart_id',$cart->id);  
-        }
-        // dd($cart, $request->session()->get('cart_id'));
-
+        $id = $request->product_id;        
+        $sessionCart = $this->getSession();  
+        $cart = $this->getCart();        
         $product = Product::with('prices')->find($id);        
         if ($cart->items->where('product_id', $id)->count()>0) {
             return redirect(route('home').'/products');
@@ -44,7 +29,7 @@ class CartController extends Controller
         
         $cart->items()->save($cartitem);
         $cart_cost = $this->totalPrice($cart->id);
-        $cart->totalPrice->update(['value' => $cart_cost]);             
+        $cart->totalPrice->update(['value' => $cart_cost]);              
         return back();
     }
 
@@ -96,6 +81,26 @@ class CartController extends Controller
         $cart->update(['status' => 'sold']);
         // $cart = Cart::with(['totalPrice', 'items', 'items.itemPrice'])->where('status', 'open')->find($request->session()->get('cart_id'));   
         return View('carts.payment', compact('cart', 'message')); 
+    }
+
+    private function getCart() : Cart{
+        $cartId = $this->getSession();
+
+        if($cartId){
+            $cart = Cart::with(['items', 'totalPrice'])->where('status', 'open')->find($cartId);             
+            if($cart == null){
+                $cart = Cart::create();
+                session(['cart_id' => $cart->id]);  
+            }            
+        }else{
+            $cart = Cart::create();
+            session(['cart_id' => $cart->id]);
+        }
+            return $cart;
+    }
+
+    private function getSession(){
+        return session('cart_id');
     }
 }
 

@@ -41,7 +41,20 @@
             </div>
             @endif
             
-            <span class="ml-auto">Log Info</span>
+        <span class="ml-auto"> 
+        @if (Auth::user())          
+        
+        {{Auth::user()->name}} 
+        <form action="{{ route('logout')}}" method="POST">
+                @csrf
+                <button type="submit">Logout</button>
+            </form>  
+           
+        @else
+        <a href='http://laravel/public/cart/checkout'>Login</a>             
+        @endif      
+        </span>
+
         </div>
             
         {{-- <div id="example"></div> --}}
